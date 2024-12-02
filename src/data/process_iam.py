@@ -1,8 +1,25 @@
+"""
+This script processes the IAM dataset. 
+
+It only keeps the fist MAX_SIZE images with a height
+and width less than MAX_HEIGHT and MAX_WIDTH. 
+
+It also resizes all images to the same size.
+
+Your raw data should be in the following format:
+- images in data/raw/iam/words
+- labels in data/raw/iam/words.txt 
+
+""" 
 import os
 import pandas as pd
 import cv2 
 import matplotlib.pyplot as plt 
 import numpy as np 
+
+MAX_HEIGHT = 100 
+MAX_WIDTH = 100 
+MAX_SIZE = 10000 
 
 raw_data_path = 'data/raw/iam' 
 processed_data_path = 'data/iam_dataset'
@@ -40,8 +57,8 @@ for root, dirs, files in os.walk(raw_data_path):
         if (
             not(
             img is None or 
-            img.shape[0] > 100 or 
-            img.shape[1] > 100
+            img.shape[0] > MAX_HEIGHT or 
+            img.shape[1] > MAX_WIDTH
             )
         ):  
             data.append(
@@ -49,9 +66,9 @@ for root, dirs, files in os.walk(raw_data_path):
             )
         
         img_id += 1 
-        if len(data) > max_size: 
+        if len(data) >= MAX_SIZE: 
             break
-    if len(data) > max_size: 
+    if len(data) >= MAX_SIZE: 
         break 
 
 print("Images loaded") 
