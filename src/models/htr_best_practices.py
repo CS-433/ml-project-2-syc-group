@@ -145,9 +145,10 @@ class CTCtopB(nn.Module):
 
 
 class HTRNet(nn.Module):
-    def __init__(self, arch_cfg, nclasses):
+    def __init__(self, arch_cfg, nclasses, device = 'cpu'): 
         super(HTRNet, self).__init__()
 
+        self.device = device 
         if arch_cfg.stn: 
             raise NotImplementedError('Spatial Transformer Networks not implemented - you can easily build your own!')
             #self.stn = STN()
@@ -155,7 +156,7 @@ class HTRNet(nn.Module):
             self.stn = None
 
         cnn_cfg = arch_cfg.cnn_cfg
-        self.features = CNN(arch_cfg.cnn_cfg, flattening=arch_cfg.flattening)
+        self.features = CNN(arch_cfg.cnn_cfg, flattening=arch_cfg.flattening).to(device)
 
         if arch_cfg.flattening=='maxpool' or arch_cfg.flattening=='avgpool':
             hidden = cnn_cfg[-1][-1]
@@ -171,12 +172,13 @@ class HTRNet(nn.Module):
             self.top = CTCtopR(hidden, (arch_cfg.rnn_hidden_size, arch_cfg.rnn_layers), nclasses, rnn_type=arch_cfg.rnn_type)
         elif head=='both':
             self.top = CTCtopB(hidden, (arch_cfg.rnn_hidden_size, arch_cfg.rnn_layers), nclasses, rnn_type=arch_cfg.rnn_type)
-
+        self.top = self.top.to(device) 
+        
     def forward(self, x):
 
         if self.stn is not None:
             x = self.stn(x)
-
+        
         y = self.features(x)
         y = self.top(y)
 
