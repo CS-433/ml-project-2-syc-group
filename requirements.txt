@@ -10,3 +10,5 @@ torchsummaryX
 tqdm
 onnx
 tensorboard
+transformers
+evaluate
