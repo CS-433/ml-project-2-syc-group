@@ -2,8 +2,8 @@
 #SBATCH --chdir ./slurm/
 #SBATCH --ntasks 1
 #SBATCH --cpus-per-task 1
-#SBATCH --mem 10G
-#SBATCH --time 00:30:00
+#SBATCH --mem 20G
+#SBATCH --time 01:00:00
 #SBATCH --gres gpu:1
 
 cd ../
@@ -43,7 +43,7 @@ source .env
 # Insert code
 pyhton src/data/extract_from_raw.py 
 python src/data/prepare_data.py 
-python src/train/train.py --config configs/cnn_bilstm_mltu_default.yaml
+python src/train/train.py --config configs/vit_default.yaml
 
 echo "Batch is complete"
 sleep 2
