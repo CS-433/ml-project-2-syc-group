@@ -1,10 +1,10 @@
 #!/bin/bash -l
 #SBATCH --chdir ./slurm/
 #SBATCH --ntasks 1
-#SBATCH --cpus-per-task 1
-#SBATCH --mem 10G
-#SBATCH --time 00:30:00
-#SBATCH --gres gpu:1
+#SBATCH --cpus-per-task 2
+#SBATCH --mem 20G
+#SBATCH --time 3:00:00
+#SBATCH --gres gpu:2
 
 cd ../
 #python ../test.py
