@@ -3,7 +3,7 @@
 #SBATCH --ntasks 1
 #SBATCH --cpus-per-task 1
 #SBATCH --mem 20G
-#SBATCH --time 01:00:00
+#SBATCH --time 02:00:00
 #SBATCH --gres gpu:1
 
 cd ../
@@ -36,14 +36,11 @@ pip install --upgrade pip
 #pip install torch
 
 pip install -r requirements.txt
+source .env
 
-echo "Dependencies have been installed, Now running the given code"
-source .env 
 
-# Insert code
-pyhton src/data/extract_from_raw.py 
-python src/data/prepare_data.py 
-python src/train/train.py --config configs/vit_default.yaml
+python src/train/train.py --config configs/htr_net_cuda.yaml
 
 echo "Batch is complete"
 sleep 2
+

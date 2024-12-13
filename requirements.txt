@@ -12,4 +12,6 @@ onnx
 tensorboard
 timm
 transformers
+jiwer
 evaluate
+
