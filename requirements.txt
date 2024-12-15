@@ -10,12 +10,8 @@ torchsummaryX
 tqdm
 onnx
 tensorboard
-<<<<<<< HEAD
 timm
 transformers
 jiwer
 evaluate
 
-=======
-timm 
->>>>>>> main
